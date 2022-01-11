@@ -95,32 +95,26 @@ for (let i = 0; i < postsArray.length; i++) {
 /* viene incrementato il numero di like */
 /* in un secondo array vengono salvati gli id del post a cui si è messo mi piace */
 
-const likedPosts = [];
-const singleLike = [];
-for (let i = 0; i < postsArray.length; i++) {
-  singleLike[i] = postsArray[i].likeOnPost;
-  let singlePost = postsArray[i];
-}
-
 let likeButton = document.querySelectorAll(".like-button");
 for (let i = 0; i <= postsArray.length; i++) {
   /* let { likeOnPost } = postsArray[i].likeOnPost; */
   likeButton[i].addEventListener("click", function () {
     if (x % 2 == 0) {
       this.classList.add("like-button--liked");
-
+      /* console.log(postsArray[i]); */
       likedPosts.push({
         id: postsArray[i - 1].idPost,
       });
-
+      console.log(likedPosts);
       x++;
+      console.log(x);
       console.log(postsArray[i - 1].likeOnPost + 1);
-      singleLike[i]++;
+      /* postsArray[i].likeOnPost++; */
     } else {
       this.classList.remove("like-button--liked");
       x--;
       console.log(postsArray[i - 1].likeOnPost);
-      singleLike[i]--;
+      /* postsArray[i].likeOnPost--; */
     }
   });
 }
