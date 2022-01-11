@@ -1,7 +1,6 @@
 /* Milestone 1 */
 
 /* creo un array di oggetti che andrà a racchiudere la struttura dei vari post */
-let x = 0;
 const postsArray = [
   {
     idPost: 1,
@@ -35,6 +34,19 @@ const postsArray = [
       "https://stack-vod-learnn-source-9043g70p82tj.s3.eu-west-3.amazonaws.com/large_i_cover_boolean_01_a0978d807b.jpg",
     likeOnPost: 217,
   },
+
+  {
+    idPost: 4,
+    nomeAutore: "Spider-Man",
+    fotoAutore:
+      "https://images.everyeye.it/img-articoli/spider-man-4-amazing-spider-man-3-storia-sequel-maledetti-speciale-v11-54450-900x900.webp",
+    data: new Date().toLocaleDateString(),
+    testo:
+      "Oggi ho visitato <strong><u>Brescia</u></strong>, molto più tranquilla della Grande Mela!",
+    immagine:
+      "https://www.bresciatoday.it/~media/horizontal-hi/33738095209915/spidermanbrescia-piazza-vittoria-2.jpg",
+    likeOnPost: 312117,
+  },
 ];
 
 /* console.log(postsArray); */
@@ -42,9 +54,9 @@ const postsArray = [
 /* Milestone 2 */
 
 //partendo dal layout di riferimento presente dall'HTML, ricreo il post con i dati che ho inserito nell'array
-const postsContainer = document.querySelector(".posts-list");
+/* const postsContainer = document.querySelector(".posts-list"); */
 
-for (let i = 0; i < postsArray.length; i++) {
+/* for (let i = 0; i < postsArray.length; i++) {
   const post = postsArray[i];
   postsContainer.innerHTML += ` 
 <div class="post">
@@ -87,7 +99,7 @@ for (let i = 0; i < postsArray.length; i++) {
   </div>
 </div>
 `;
-}
+} */
 
 /* Milestone 3 */
 
@@ -95,26 +107,100 @@ for (let i = 0; i < postsArray.length; i++) {
 /* viene incrementato il numero di like */
 /* in un secondo array vengono salvati gli id del post a cui si è messo mi piace */
 
-let likeButton = document.querySelectorAll(".like-button");
-for (let i = 0; i <= postsArray.length; i++) {
-  /* let { likeOnPost } = postsArray[i].likeOnPost; */
-  likeButton[i].addEventListener("click", function () {
+/* let likeButton = document.querySelectorAll(".like-button");
+for (let i = 0; i <= postsArray.length; i++) { */
+/* let { likeOnPost } = postsArray[i].likeOnPost; */
+/*   likeButton[i].addEventListener("click", function () {
     if (x % 2 == 0) {
-      this.classList.add("like-button--liked");
-      /* console.log(postsArray[i]); */
-      likedPosts.push({
+      this.classList.add("like-button--liked"); */
+/* console.log(postsArray[i]); */
+/*       likedPosts.push({
         id: postsArray[i - 1].idPost,
       });
       console.log(likedPosts);
       x++;
       console.log(x);
-      console.log(postsArray[i - 1].likeOnPost + 1);
-      /* postsArray[i].likeOnPost++; */
-    } else {
+      console.log(postsArray[i - 1].likeOnPost + 1); */
+/* postsArray[i].likeOnPost++; */
+/*    } else {
       this.classList.remove("like-button--liked");
       x--;
-      console.log(postsArray[i - 1].likeOnPost);
-      /* postsArray[i].likeOnPost--; */
+      console.log(postsArray[i - 1].likeOnPost); */
+/* postsArray[i].likeOnPost--; */
+/*     }
+  });
+} */
+
+const postsCont = document.querySelector(".posts-list");
+
+/* Milestone 2 - 3 */
+
+//partendo dal layout di riferimento presente dall'HTML, ricreo il post con i dati che ho inserito nell'array
+let x = 0;
+const numberOfLikes = [];
+
+for (let i = 0; i < postsArray.length; i++) {
+  let singlePost = postsArray[i];
+  numberOfLikes[i] = postsArray[i].likeOnPost;
+
+  postsCont.innerHTML += ` 
+<div class="post">
+  <div class="post__header">
+    <div class="post-meta">
+      <div class="post-meta__icon">
+        <img
+          class="profile-pic"
+          src="${singlePost.fotoAutore}"
+        />
+      </div>
+      <div class="post-meta__data">
+        <div class="post-meta__author">${singlePost.nomeAutore}</div>
+        <div class="post-meta__time">${singlePost.data}</div>
+      </div>
+    </div>
+  </div>
+  <div class="post__text">
+    ${singlePost.testo}
+  </div>
+  <div class="post__image">
+    <img src="${singlePost.immagine}" alt="" />
+  </div>
+  <div class="post__footer">
+    <div class="likes js-likes">
+      <div class="likes__cta">
+        <a class="like-button js-like-button" href="#/" data-postid="${singlePost.idPost}">
+          <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+          <span class="like-button__label">Mi Piace</span>
+        </a>
+      </div>
+      <div class="likes__counter">
+        Piace a
+        <b id="like-counter-${singlePost.idPost}" class="js-likes-counter">
+        ${singlePost.likeOnPost}
+        </b>
+        persone
+      </div>
+    </div>
+  </div>
+</div>
+`;
+}
+
+let likeButton = document.querySelectorAll(".like-button");
+
+for (let i = 0; i < likeButton.length; i++) {
+  likeButton[i].addEventListener("click", function () {
+    if (x % 2 === 0) {
+      likeButton[i].classList.add("like-button--liked");
+      x++;
+      numberOfLikes[i]++;
+    } else {
+      likeButton[i].classList.remove("like-button--liked");
+      x--;
+      numberOfLikes[i]--;
     }
+
+    document.getElementById(`like-counter-${postsArray[i].idPost}`).innerHTML =
+      numberOfLikes[i];
   });
 }
