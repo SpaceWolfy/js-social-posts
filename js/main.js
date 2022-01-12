@@ -54,7 +54,6 @@ const postsCont = document.querySelector(".posts-list");
 /* Milestone 2 - 3 */
 
 //partendo dal layout di riferimento presente dall'HTML, ricreo il post con i dati che ho inserito nell'array
-let x = 0;
 const numberOfLikes = [];
 
 for (let i = 0; i < postsArray.length; i++) {
@@ -103,18 +102,23 @@ for (let i = 0; i < postsArray.length; i++) {
 </div>
 `;
 }
-
+let idArray = [];
 let likeButton = document.querySelectorAll(".like-button");
 
 for (let i = 0; i < likeButton.length; i++) {
+  let x = 0;
+
   likeButton[i].addEventListener("click", function () {
-    if (x % 2 === 0) {
-      likeButton[i].classList.add("like-button--liked");
-      x++;
+    const id = i + 1;
+    idArray.push(id);
+    console.log(idArray);
+
+    this.classList.toggle("like-button--liked");
+    x++;
+    if (x % 2 !== 0) {
       numberOfLikes[i]++;
+      console.log(x);
     } else {
-      likeButton[i].classList.remove("like-button--liked");
-      x--;
       numberOfLikes[i]--;
     }
 
